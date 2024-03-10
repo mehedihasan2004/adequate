@@ -7,8 +7,131 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum E_Role {
+  PATIENT
+  DOCTOR
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum E_Speciality {
+  THYROID
+  EYE
+  NEUROLOGY
+  CARDIOLOGY
+  MEDICINE
+  PSYCHIATRY
+  DENTIST
+  ORTHOPEDICS
+  HAEMATOLOGY
+  GYNAECOLOGY
+}
+
+enum E_Branch {
+  BARISHAL
+  CHATTOGRAM
+  DHAKA
+  KHULNA
+  RAJSHAHI
+  RANGPUR
+  MYMENSINGH
+  SYLHET
+}
+
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id String @id @default(cuid())
+
+  name     String?
+  email    String  @unique
+  password String?
+  rawPass  String?
+  role     E_Role  @default(PATIENT)
+  image    String?
+
+  patient Patient?
+  doctor  Doctor?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Patient {
+  id String @id @default(cuid())
+
+  address   String?
+  contactNo String? @unique
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  appintments   Appointment[]
+  doctorReviews DoctorReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("patients")
+}
+
+model Doctor {
+  id String @id @default(cuid())
+
+  contactNo   String       @unique
+  experiences String
+  about       String?      @db.Text
+  visitFee    Int          @default(0)
+  speciality  E_Speciality
+  branch      E_Branch     @default(DHAKA)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  appointments Appointment[]
+  reviews      DoctorReview[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("doctors")
+}
+
+model DoctorReview {
+  id String @id @default(cuid())
+
+  rating   Int    @default(0)
+  feedback String
+
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id])
+
+  doctorId String
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("doctor_reviews")
+}
+
+model Appointment {
+  id String @id @default(cuid())
+
+  date      DateTime
+  slot      String
+  name      String
+  email     String
+  contactNo String
+
+  patientId String
+  patient   Patient @relation(fields: [patientId], references: [id])
+
+  doctorId String
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("appointments")
 }
