@@ -38,7 +38,7 @@ CREATE TABLE "patients" (
 CREATE TABLE "doctors" (
     "id" TEXT NOT NULL,
     "contactNo" TEXT NOT NULL,
-    "experiences" TEXT NOT NULL,
+    "educationAndExperience" TEXT NOT NULL,
     "about" TEXT,
     "visitFee" INTEGER NOT NULL DEFAULT 0,
     "speciality" "E_Speciality" NOT NULL,

@@ -39,7 +39,7 @@ enum E_Branch {
 }
 
 model User {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   name     String?
   email    String  @unique
@@ -58,7 +58,7 @@ model User {
 }
 
 model Patient {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   address   String?
   contactNo String? @unique
@@ -76,14 +76,14 @@ model Patient {
 }
 
 model Doctor {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
-  contactNo   String       @unique
-  experiences String
-  about       String?      @db.Text
-  visitFee    Int          @default(0)
-  speciality  E_Speciality
-  branch      E_Branch     @default(DHAKA)
+  contactNo              String       @unique
+  educationAndExperience String       @db.Text
+  about                  String?      @db.Text
+  visitFee               Int          @default(0)
+  speciality             E_Speciality
+  branch                 E_Branch     @default(DHAKA)
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
@@ -98,7 +98,7 @@ model Doctor {
 }
 
 model DoctorReview {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   rating   Int    @default(0)
   feedback String
@@ -116,7 +116,7 @@ model DoctorReview {
 }
 
 model Appointment {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   date      DateTime
   slot      String
