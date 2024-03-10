@@ -1,18 +1,24 @@
+"use client";
+
+import { cn } from "@/lib/utils";
+import { MapPin, Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { DoctorCardImage } from "@/app/_components";
+import { badgeVariants } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { DoctorCardImage } from "@/app/_components";
-import { MapPin, Star } from "lucide-react";
-import { badgeVariants } from "@/components/ui/badge";
 
 const DoctorCard = () => {
+  const id = 123;
+  const { push } = useRouter();
+
   return (
-    <Card className={cn("w-[300px]")}>
+    <Card className={cn("w-[300px] bg-primary/5")}>
       <CardHeader>
         <DoctorCardImage src="/images/logo.png" fallbackText="Doctor" />
       </CardHeader>
@@ -42,7 +48,9 @@ const DoctorCard = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Visit Doctor</Button>
+        <Button onClick={() => push(`/doctors/${id}`)} className="w-full">
+          Visit Doctor
+        </Button>
       </CardFooter>
     </Card>
   );
