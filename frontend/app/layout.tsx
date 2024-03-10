@@ -1,4 +1,8 @@
 import "./globals.css";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import type { Metadata } from "next";
