@@ -38,7 +38,7 @@ const DoctorCard = () => {
             Eye
           </p>
           <div className="flex flex-row items-center gap-x-1">
-            <Star fill="gold" className="size-4 text-[gold]" />
+            <Star fill="gold" color="gold" size={16} />
             <p className="font-semibold">4.5</p>
           </div>
         </div>
